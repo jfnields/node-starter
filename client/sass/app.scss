@@ -1,0 +1,19 @@
+.app {
+    font-family: "Helvetica Neue", "Arial", sans-serif;
+    color: #bbb;
+    width: 50%;
+    margin-left: 50%;
+    margin-top: 300px;
+    overflow: hidden;
+    transform: translateX(-50%);
+    text-align: center;
+
+    h1:hover {
+        color: #aaa;
+    }
+
+    p {
+        color: #333;
+    }
+
+}
