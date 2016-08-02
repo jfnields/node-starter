@@ -1,12 +1,11 @@
 import React from "react";
 import CommentBox from "../../components/comment-box";
-// import styles from "../../sass/comment-box";
-import { expect } from "chai";
-import { shallow } from "enzyme";
+import {expect} from "chai";
+import {shallow} from "enzyme";
 
-const headerText = "Example Header Text";
-const description = "ExampleDescription";
-const props = { headerText, description };
+const headerText = "Example Header Text",
+    description = "ExampleDescription",
+    props = { headerText, description };
 
 describe("<CommentBox/>", () => {
 

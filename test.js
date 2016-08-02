@@ -9,45 +9,53 @@ const webpack = require("webpack"),
         config.output.path,
         config.output.filename
     ),
+    clear = require("clear"),
     glob = require("glob"),
     chokidar = require("chokidar"),
-    watch = process.argv.indexOf("--watch"),
+    watch = process.argv.indexOf("--watch") > -1,
     jsdom = require("jsdom").jsdom,
     exposedProperties = ["window", "navigator", "document"],
     testsGlob = "./client/specs/**/*.js";
 
-global.document = jsdom("");
-global.window = global.document.defaultView;
-Object.keys(global.document.defaultView).forEach((property) => {
-    if (typeof global[property] === "undefined") {
-        exposedProperties.push(property);
-        global[property] = global.document.defaultView[property];
+let watcher,
+    runner;
+
+setupGlobals();
+compileAndRun();
+
+function setupGlobals() {
+    global.document = jsdom("");
+    global.window = global.document.defaultView;
+    Object.keys(global.document.defaultView).forEach((property) => {
+        if (typeof global[property] === "undefined") {
+            exposedProperties.push(property);
+            global[property] = global.document.defaultView[property];
+        }
+    });
+    global.navigator = {
+        userAgent: "node.js"
+    };
+    global.documentRef = global.document;
+
+    config.entry = glob.sync(testsGlob);
+    if(watch) {
+        chokidar.watch(testsGlob)
+            .on("add", () => {
+                config.entry = glob.sync(testsGlob);
+                compileAndRun({});
+            })
+            .on("unlink", () => {
+                config.entry = glob.sync(testsGlob);
+                compileAndRun({});
+            });
     }
-});
-global.navigator = {
-    userAgent: "node.js"
-};
-global.documentRef = global.document;
-
-config.entry = glob.sync(testsGlob);
-if(watch) {
-    chokidar.watch(testsGlob)
-        .on("add", () => {
-            config.entry = glob.sync(testsGlob);
-            compileAndRun({});
-        })
-        .on("unlink", () => {
-            config.entry = glob.sync(testsGlob);
-            compileAndRun({});
-        });
+    // change Mocha to load modules from the in-memory fs
+    // instead of via the ordinary require
+    const newFunc = `(function(require){
+        return ${Mocha.prototype.loadFiles.toString()};
+    }(${mfsRequire.name}));`;
+    Mocha.prototype.loadFiles = eval(newFunc);
 }
-
-// change Mocha to load modules from the in-memory fs
-// instead of via the ordinary require
-const newFunc = `(function(require){
-    return ${Mocha.prototype.loadFiles.toString()};
-}(${mfsRequire.name}));`;
-Mocha.prototype.loadFiles = eval(newFunc);
 
 // compile a file from the in-memory fs into a module
 function mfsRequire(file) {
@@ -63,8 +71,6 @@ function mfsRequire(file) {
     return m.exports;
 }
 
-let watcher;
-let runner;
 function compileAndRun() {
 
     watcher && watcher.close();
@@ -104,6 +110,7 @@ function compileAndRun() {
 
     function run(fn) {
         try {
+            clear(true);
             runner = new Mocha().addFile(output).run();
             runner.on("end", () => {
                 runner = null;
@@ -115,5 +122,3 @@ function compileAndRun() {
         }
     }
 }
-
-compileAndRun();

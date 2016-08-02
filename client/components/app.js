@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from "react";
 import styles from "../sass/app.scss";
+import CommentBox from "./comment-box";
 
 export default class App extends Component {
 
@@ -14,6 +15,7 @@ export default class App extends Component {
         return <div className={styles.app}>
             <h1>{this.props.headerText}</h1>
             <p>{this.props.description}</p>
+            <CommentBox/>
         </div>;
     }
 }
