@@ -10,7 +10,6 @@ export default class CommentBox extends Component {
 
     render() {
         return <div className={styles.commentBox}>
-            <textarea></textarea>
         </div>;
     }
 }

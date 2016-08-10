@@ -24,8 +24,8 @@ describe("<App/>", () => {
 
     it("contains a <CommentBox/>", function() {
         expect(
-            shallow(<App {...props}/>).find(CommentBox).length
-        ).to.not.equal(0);
+            mount(<App {...props}/>).find(CommentBox).length
+        ).to.be.at.least(1);
     });
 
     it("can run an expectation with render", function() {

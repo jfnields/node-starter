@@ -16,11 +16,11 @@
     },
     "rules": {
         "indent": [
-            "error",
+            "warn",
             4
         ],
         "linebreak-style": [
-            "error",
+            "warn",
             "unix"
         ],
         "no-console": "off",
@@ -28,7 +28,7 @@
         "no-shadow": "error",
         "no-shadow-restricted-names": "error",
         "quotes": [
-            "error",
+            "warn",
             "double"
         ],
         "semi": [
