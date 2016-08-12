@@ -1,36 +1,25 @@
 import React from "react";
 import App from "../../components/app";
-import styles from "../../sass/app";
 import {expect} from "chai";
-import {shallow, mount, render} from "enzyme";
+import {shallow} from "enzyme";
 import CommentBox from "../../components/comment-box";
+import CommentsList from "../../components/comments-list";
 const headerText = "Example Header Text",
     description = "ExampleDescription",
     props = { headerText, description };
 
 describe("<App/>", () => {
 
-    it("contains an <h1/>", () => {
+    it("contains a <CommentBox/>", function() {
         expect(
-            shallow(<App {...props}/>).find("h1").length
-        ).to.be.at.least(1);
-    });
-
-    it("has the correct class", function() {
-        expect(
-            shallow(<App {...props} />).is("." + styles.app)
+            shallow(<App {...props}/>).contains(<CommentBox/>)
         ).to.be.true;
     });
 
-    it("contains a <CommentBox/>", function() {
+    it("contains a <CommentsList/>", function() {
         expect(
-            mount(<App {...props}/>).find(CommentBox).length
-        ).to.be.at.least(1);
-    });
-
-    it("can run an expectation with render", function() {
-        expect(
-            render(<App {...props}/>).find("*").length
-        ).to.not.equal(0);
+            shallow(<App {...props}/>)
+                .contains(<CommentsList comments={[]}/>)
+        ).to.be.true;
     });
 });

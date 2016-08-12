@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --ignore-path .gitignore --fix .; exit 0",
-    "start:dev": "node dev-server.js",
+    "start": "node server.js",
     "test": "node test.js",
     "test:watch": "node test.js --watch"
   },
@@ -55,6 +55,7 @@
     "http": "0.0.0",
     "https": "^1.0.0",
     "inflected": "^1.1.7",
+    "lodash": "^4.14.2",
     "morgan": "^1.7.0",
     "orm": "^3.1.0",
     "serve-favicon": "^2.3.0"

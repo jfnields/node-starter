@@ -111,7 +111,7 @@ function compileAndRun() {
     function run(fn) {
         try {
             clear(true);
-            runner = new Mocha().addFile(output).run();
+            runner = new Mocha({reporter: "min"}).addFile(output).run();
             runner.on("end", () => {
                 runner = null;
                 fn && fn();

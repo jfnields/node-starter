@@ -26,7 +26,7 @@ const wpModule = {
             "test": /\.s[ac]ss?$/,
             "loaders": [
                 "style",
-                "css?modules",
+                "css?modules&camelCase",
                 "postcss",
                 "sass?outputStyle=compressed"
             ]
@@ -80,7 +80,7 @@ const testConfig = {
     postcss,
     "eslint": {
         "failOnWarning": false,
-        "failOnError": true
+        "failOnError": false
     },
     externals: {
         "react/addons": true,
