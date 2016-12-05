@@ -1,3 +1,5 @@
 node_modules
 public/build
+server-bundle.js
+server-bundle.js.map
 npm-debug.log

@@ -1,13 +1,12 @@
-#!/usr/bin/env node
-
 /**
  * Module dependencies.
  */
 
-let app = require("./server/app");
-let debug = require("debug")("mern:server");
-let http = require("http");
+import app from "./app";
+import debug from "debug";
+import http from "http";
 
+const debugLog = debug("mern:server");
 /**
  * Get port from environment and store in Express.
  */
@@ -83,5 +82,5 @@ function onListening() {
     let bind = typeof addr === "string"
         ? "pipe " + addr
         : "port " + addr.port;
-    debug("Listening on " + bind);
+    debugLog("Listening on " + bind);
 }
